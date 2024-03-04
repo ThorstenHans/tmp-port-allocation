@@ -39,3 +39,13 @@ Emitted 'error' event on Server instance at:
 
 Node.js v21.6.2
 ```
+
+In contrast, when looking at the logs of the `non-admin-port` container you'll see this:
+
+```bash
+kubectl logs non-admin-port
+Example app listening on port 1025
+Healthz called
+Healthz called
+....
+```
