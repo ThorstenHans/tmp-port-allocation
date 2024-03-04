@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: admin-port
+  labels:
+    app: admin-port
+spec:
+  imagePullSecrets:
+    - name: acr
+  containers:
+  - name: main
+    image: spinsample2.azurecr.io/node:0.0.1
+    imagePullPolicy: Always
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    env:
+      - name: PORT
+        value: "80"
+    livenessProbe:
+      httpGet:
+        path: healthz
+        port: 80
+      initialDelaySeconds: 20
+      periodSeconds: 3    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-port
+spec:
+  selector:
+    app: admin-port
+  ports:
+  - port: 8080
+    targetPort: 80
+
